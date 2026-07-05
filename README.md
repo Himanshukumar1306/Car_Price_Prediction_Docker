@@ -2,6 +2,8 @@
 
 An end-to-end Machine Learning web application that predicts the resale price of a used car based on its historical specifications and features. The application consists of a trained **Random Forest Regressor** model, a robust **Flask backend API**, and a premium **glassmorphic responsive UI**—all packaged inside a secure, isolated **Docker container** configured for seamless cloud deployment.
 
+🌐 **Live Website**: Access the live web application at **[https://car-price-prediction-docker-cjrn.onrender.com/](https://car-price-prediction-docker-cjrn.onrender.com/)**
+
 ---
 
 ## 🚀 Key Features
@@ -32,45 +34,6 @@ An end-to-end Machine Learning web application that predicts the resale price of
 ├── .gitignore             # Git ignored files configuration
 └── README.md              # Project documentation
 ```
-
----
-
-## 💻 Running the App Locally
-
-### Method 1: Using Docker (Recommended)
-Make sure you have Docker Desktop running on your machine.
-
-1.  **Build the Docker Image**:
-    ```bash
-    docker build -t car-price-predictor .
-    ```
-2.  **Run the Container**:
-    ```bash
-    docker run -d -p 5000:5000 --name car-price-app car-price-predictor
-    ```
-3.  **Access the Application**:
-    Open your browser and navigate to **[http://localhost:5000](http://localhost:5000)**.
-
----
-
-### Method 2: Running with Local Python
-Make sure you have Python 3.8+ installed.
-
-1.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-2.  **Train the Model (Optional)**:
-    If you want to re-train the model locally:
-    ```bash
-    python train.py
-    ```
-3.  **Start the Server**:
-    ```bash
-    python app.py
-    ```
-4.  **Access the Application**:
-    Open your browser and navigate to **[http://127.0.0.1:5000](http://127.0.0.1:5000)**.
 
 ---
 
