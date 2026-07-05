@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: car-price-predictor
+    env: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /health

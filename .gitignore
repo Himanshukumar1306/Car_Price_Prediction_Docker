@@ -1,0 +1,17 @@
+# Python cache and compiled code
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# System config
+.agents/
+.gemini/
+.DS_Store
+Thumbs.db

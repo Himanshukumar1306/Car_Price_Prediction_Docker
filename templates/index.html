@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #4f52e2 0%, #8a4fe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.25);
+            --input-focus: rgba(255, 255, 255, 0.35);
+            --text-color: #ffffff;
+            --placeholder-color: rgba(255, 255, 255, 0.7);
+            --gold-color: #facc15;
+            --error-color: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: rgba(138, 140, 226, 0.3);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Customize scrollbars and number inputs */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input::placeholder {
+            color: var(--placeholder-color);
+            font-weight: 500;
+        }
+
+        input:focus {
+            background: var(--input-focus);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #ffffff;
+            color: #4f52e2;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: #f8fafc;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: rgba(255, 255, 255, 0.6);
+            cursor: not-allowed;
+            color: #8c8fdb;
+        }
+
+        .result-container {
+            margin-top: 25px;
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .result-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-text {
+            color: var(--gold-color);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .error-message {
+            margin-top: 15px;
+            color: var(--error-color);
+            font-size: 14px;
+            font-weight: 600;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Micro-animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Car Price Prediction</h2>
+            
+            <form id="predictionForm">
+                <div class="form-group">
+                    <input type="number" step="0.01" min="0.01" id="present_price" name="present_price" placeholder="Present Price (in Lakhs)" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" id="kms_driven" name="kms_driven" placeholder="Kilometers Driven" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" max="2" id="fuel_type" name="fuel_type" placeholder="Fuel Type (0:Petrol, 1:Diesel, 2:CNG)" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" max="1" id="seller_type" name="seller_type" placeholder="Seller Type (0:Dealer, 1:Individual)" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" max="1" id="transmission" name="transmission" placeholder="Transmission (0:Manual, 1:Auto)" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" id="owner" name="owner" placeholder="Number of Previous Owners" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" min="0" id="age" name="age" placeholder="Age of Car (in years)" required>
+                </div>
+                
+                <button type="submit" id="predictBtn">Predict Price</button>
+            </form>
+            
+            <div class="result-container" id="resultContainer">
+                <p class="result-text" id="resultText">Estimated Car Price: ₹ -- Lakhs</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage">Error: Something went wrong.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('predictBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultText = document.getElementById('resultText');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // UI States Reset
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Predicting...';
+            resultContainer.classList.remove('show');
+            errorMessage.classList.remove('show');
+            
+            // Gather values
+            const formData = {
+                present_price: document.getElementById('present_price').value,
+                kms_driven: document.getElementById('kms_driven').value,
+                fuel_type: document.getElementById('fuel_type').value,
+                seller_type: document.getElementById('seller_type').value,
+                transmission: document.getElementById('transmission').value,
+                owner: document.getElementById('owner').value,
+                age: document.getElementById('age').value
+            };
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Success path
+                    resultText.innerHTML = `Estimated Car Price: ₹ ${result.formatted_prediction} Lakhs`;
+                    setTimeout(() => {
+                        resultContainer.classList.add('show');
+                    }, 100);
+                } else {
+                    // Error path
+                    errorMessage.textContent = result.error || 'Failed to predict price. Please check inputs.';
+                    errorMessage.classList.add('show');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                errorMessage.textContent = 'Network error: Cannot reach prediction server.';
+                errorMessage.classList.add('show');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Predict Price';
+            }
+        });
+    </script>
+</body>
+</html>

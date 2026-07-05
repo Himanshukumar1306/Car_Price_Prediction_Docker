@@ -1,0 +1,32 @@
+# Exclude virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Exclude python cache and compiled code
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Exclude local training data and training scripts
+car_data.csv
+train.py
+download_data.py
+
+# Exclude IDE and configuration folders
+.git/
+.github/
+.vscode/
+.idea/
+.agents/
+.gemini/
+
+# Exclude docker-compose if created locally
+docker-compose.yml
+
+# Exclude documentation files
+README.md
+*.log
