@@ -37,19 +37,6 @@ An end-to-end Machine Learning web application that predicts the resale price of
 
 ---
 
-## ☁️ Deploying to Render
-
-This repository is optimized for deployment on **Render** using a Blueprint specification:
-
-1.  Create a new repository on GitHub and push this codebase.
-2.  Log into your **[Render Dashboard](https://dashboard.render.com)**.
-3.  Click the **New +** button (top right) and select **Blueprint**.
-4.  Select the repository you just created.
-5.  Render will parse `render.yaml` and configure the service environment (Docker) automatically on the **Free plan**.
-6.  Click **Approve/Deploy**. The container will be compiled and launched live in the cloud.
-
----
-
 ## 📊 Model & Features Specification
 
 The regression model is trained on the following input parameters:
